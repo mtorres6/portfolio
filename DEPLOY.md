@@ -15,7 +15,34 @@ Tu portafolio está **100% listo** para GitHub Pages con deploy automático. Sig
    - **License:** MIT (opcional)
 4. Clic en **"Create repository"**
 
-## 📂 Paso 2: Subir tu Código
+## � Paso 2: Configurar Autenticación
+
+**⚠️ IMPORTANTE:** GitHub no permite passwords. Elige UNA opción:
+
+### Opción A: Personal Access Token (Recomendado)
+1. Ve a GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Generate new token → Classic
+3. Permisos: ✅ repo, ✅ workflow, ✅ write:packages
+4. Clic "Generate token" y **COPIA EL TOKEN** (solo se muestra una vez)
+
+### Opción B: SSH Keys (Más seguro)
+```bash
+# Generar SSH key
+ssh-keygen -t ed25519 -C "tu-email@ejemplo.com"
+
+# Copiar key pública
+cat ~/.ssh/id_ed25519.pub
+```
+Luego agrégala en GitHub → Settings → SSH and GPG keys
+
+### Opción C: GitHub CLI (Más fácil)
+```bash
+# Instalar GitHub CLI desde https://cli.github.com
+gh auth login
+# Seguir las instrucciones
+```
+
+## 📂 Paso 3: Subir tu Código
 
 En tu terminal (en la carpeta del proyecto):
 
@@ -23,8 +50,8 @@ En tu terminal (en la carpeta del proyecto):
 # Inicializar Git (si no está inicializado)
 git init
 
-# Agregar remote origin (reemplaza TU_USERNAME)
-git remote add origin https://github.com/TU_USERNAME/portfolio.git
+# IMPORTANTE: Usar tu username real en la URL
+git remote add origin https://github.com/mtorres6/portfolio.git
 
 # Crear rama main si no existe
 git branch -M main
@@ -43,17 +70,20 @@ git commit -m "feat: Add complete professional portfolio
 - Optimized for GitHub Pages deployment"
 
 # Push al repositorio
+# Si usas PAT: username = tu_github_username, password = tu_token
+# Si usas SSH: cambia la URL a git@github.com:mtorres6/portfolio.git
+# Si usas GitHub CLI: funcionará automáticamente
 git push -u origin main
 ```
 
-## ⚙️ Paso 3: Configurar GitHub Pages
+## ⚙️ Paso 4: Configurar GitHub Pages
 
 1. En tu repositorio de GitHub, ve a **Settings** (arriba derecha)
 2. En el menú lateral, busca **"Pages"**
 3. En **"Source"**, selecciona **"GitHub Actions"**
 4. No necesitas hacer nada más - el workflow ya está configurado
 
-## 🎯 Paso 4: Verificar Deploy
+## 🎯 Paso 5: Verificar Deploy
 
 1. Ve a la pestaña **"Actions"** en tu repositorio
 2. Verás el workflow "Deploy to GitHub Pages" ejecutándose
@@ -71,6 +101,12 @@ git push -u origin main
 ✅ **Formulario funcional** - Formspree configurado con tu endpoint
 
 ## 🚨 Solución de Problemas
+
+**❌ Error "Authentication failed" / "Password authentication is not supported":**
+Re-configurar autenticación (ve al Paso 2):
+- **Si usas PAT:** En el push, username = tu_github_username, password = tu_token
+- **Si usas SSH:** Cambia remote URL: `git remote set-url origin git@github.com:mtorres6/portfolio.git`
+- **Si usas GitHub CLI:** Ejecuta `gh auth status` para verificar login
 
 **Si el sitio no carga:**
 1. Verifica que el repositorio se llame exactamente "portfolio"
